@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow Talk - Futuristic Wellness Social Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap)" rel="stylesheet">
+    <link rel="stylesheet" href="[cdnjs.cloudflare.com](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css)">
+</head>
+<body>
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content auth-modal">
+            <button class="close-modal" onclick="closeModal('authModal')">&times;</button>
+            
+            <!-- Login Form -->
+            <div id="loginForm" class="auth-form">
+                <div class="auth-header">
+                    <div class="logo">
+                        <div class="logo-icon">?</div>
+                        <span>GLOW TALK</span>
+                    </div>
+                    <p class="tagline">SHINE. SHARE. GLOW.</p>
+                </div>
+                
+                <h2>Welcome Back</h2>
+                <p class="subtitle">Continue your wellness journey.</p>
+                
+                <button class="social-btn google">
+                    <img src="[google.com](https://www.google.com/favicon.ico)" alt="Google">
+                    Continue with Google
+                </button>
+                <button class="social-btn apple">
+                    <i class="fab fa-apple"></i>
+                    Continue with Apple
+                </button>
+                
+                <div class="divider">
+                    <span>or continue with email</span>
+                </div>
+                
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="name@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password <a href="#" class="forgot-link">Forgot password?</a></label>
+                        <input type="password" placeholder="••••••••••••" required>
+                    </div>
+                    <div class="form-group checkbox">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <button type="submit" class="btn-primary">Log In</button>
+                </form>
+                
+                <p class="auth-switch">Don't have an account? <a href="#" onclick="showSignup()">Sign Up</a></p>
+            </div>
+            
+            <!-- Signup Form -->
+            <div id="signupForm" class="auth-form hidden">
+                <div class="auth-header">
+                    <div class="logo">
+                        <div class="logo-icon">?</div>
+                        <span>GLOW TALK</span>
+                    </div>
+                    <p class="tagline">SHINE. SHARE. GLOW.</p>
+                </div>
+                
+                <h2>Create Your Account</h2>
+                <p class="subtitle">Join a trusted community sharing real experiences.</p>
+                
+                <button class="social-btn google">
+                    <img src="[google.com](https://www.google.com/favicon.ico)" alt="Google">
+                    Continue with Google
+                </button>
+                <button class="social-btn apple">
+                    <i class="fab fa-apple"></i>
+                    Continue with Apple
+                </button>
+                
+                <div class="divider">
+                    <span>or</span>
+                </div>
+                
+                <form onsubmit="handleSignup(event)">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" placeholder="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="name@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" placeholder="••••••••••••" required>
+                    </div>
+                    <div class="form-group checkbox">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">I agree to the platform guidelines and privacy policy.</label>
+                    </div>
+                    <button type="submit" class="btn-primary">Create Account</button>
+                </form>
+                
+                <p class="auth-switch">Already have an account? <a href="#" onclick="showLogin()">Log In</a></p>
+            </div>
+            
+            <!-- Language Selection -->
+            <div id="languageForm" class="auth-form hidden">
+                <h2>Choose Your Language</h2>
+                <p class="subtitle">You can change this anytime in settings.</p>
+                
+                <div class="language-grid">
+                    <button class="language-btn selected" data-lang="en">
+                        <span class="flag">????</span> English
+                    </button>
+                    <button class="language-btn" data-lang="tr">
+                        <span class="flag">????</span> Türkçe
+                    </button>
+                    <button class="language-btn" data-lang="es">
+                        <span class="flag">????</span> Español
+                    </button>
+                    <button class="language-btn" data-lang="fr">
+                        <span class="flag">????</span> Français
+                    </button>
+                    <button class="language-btn" data-lang="de">
+                        <span class="flag">????</span> Deutsch
+                    </button>
+                    <button class="language-btn" data-lang="ar">
+                        <span class="flag">????</span> ???????
+                    </button>
+                    <button class="language-btn" data-lang="pt">
+                        <span class="flag">????</span> Português
+                    </button>
+                </div>
+                
+                <button class="btn-primary" onclick="showEmailVerification()">Continue</button>
+                
+                <div class="pagination-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+            
+            <!-- Email Verification -->
+            <div id="emailVerification" class="auth-form hidden">
+                <div class="verification-icon">
+                    <i class="fas fa-envelope-open-text"></i>
+                </div>
+                
+                <h2>Check Your Email</h2>
+                <p class="subtitle">We sent a verification link to<br><strong>name@example.com</strong></p>
+                <p class="verification-text">Please check your inbox and click the link to verify your account.</p>
+                
+                <button class="btn-secondary">Resend Email</button>
+                <a href="#" class="back-link" onclick="showLogin()">Back to Log In</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main App -->
+    <div id="app" class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">?</div>
+                    <span>GLOW TALK</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="home">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#" class="nav-item" data-page="explore">
+                    <i class="fas fa-compass"></i>
+                    <span>Explore</span>
+                </a>
+                <a href="#" class="nav-item" data-page="categories">
+                    <i class="fas fa-th-large"></i>
+                    <span>Categories</span>
+                </a>
+                <a href="#" class="nav-item" data-page="messages">
+                    <i class="fas fa-comment-dots"></i>
+                    <span>Messages</span>
+                </a>
+                <a href="#" class="nav-item" data-page="saved">
+                    <i class="fas fa-bookmark"></i>
+                    <span>Saved</span>
+                </a>
+                <a href="#" class="nav-item" data-page="profile">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+                <a href="#" class="nav-item" data-page="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info" onclick="openModal('authModal')">
+                    <div class="avatar">
+                        <img src="[i.pravatar.cc](https://i.pravatar.cc/150?img=47)" alt="User">
+                        <span class="status-badge trusted">Trusted</span>
+                    </div>
+                    <div class="user-details">
+                        <span class="name">Merve Y.</span>
+                        <span class="glow-score">? Glow 320</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home Page -->
+            <div id="homePage" class="page active">
+                <header class="page-header">
+                    <h1>Welcome back, Merve ?</h1>
+                    <div class="header-actions">
+                        <div class="search-bar">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search experiences...">
+                        </div>
+                        <button class="btn-icon">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">3</span>
+                        </button>
+                    </div>
+                </header>
+                
+                <div class="feed">
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="author-info">
+                                <img src="[i.pravatar.cc](https://i.pravatar.cc/150?img=32)" alt="User" class="author-avatar">
+                                <div>
+                                    <span class="author-name">Ceren K. <span class="badge trusted">Trusted</span></span>
+                                    <span class="post-meta">Rhinoplasty • 6 months ago</span>
+                                </div>
+                            </div>
+                            <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
+                        </div>
+                        <div class="post-content">
+                            <h3>My rhinoplasty 6 month journey</h3>
+                            <p>I'm so happy with my results. Breathing better and more confident now. Here's my complete timeline and tips for anyone considering this procedure...</p>
+                            <div class="post-images">
+                                <img src="[images.unsplash.com](https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400)" alt="Before">
+                                <img src="[images.unsplash.com](https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400)" alt="After">
+                            </div>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag">Rhinoplasty</span>
+                            <span class="tag">6 Month Results</span>
+                            <span class="tag">Experience Sharing</span>
+                        </div>
+                        <div class="post-actions">
+                            <button class="action-btn"><i class="far fa-heart"></i> 128</button>
+                            <button class="action-btn"><i class="far fa-comment"></i> 46</button>
+                            <button class="action-btn"><i class="fas fa-check-circle"></i> Helpful</button>
+                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="author-info">
+                                <img src="[i.pravatar.cc](https://i.pravatar.cc/150?img=45)" alt="User" class="author-avatar">
+                                <div>
+                                    <span class="author-name">Burak Y. <span class="badge active">Active</span></span>
+                                    <span class="post-meta">Lip Filler • 1 week ago</span>
+                                </div>
+                            </div>
+                            <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
+                        </div>
+                        <div class="post-content">
+                            <h3>Lip filler results: 1 week update ??</h3>
+                            <p>Swelling going down, results getting more natural every day. The shape is exactly what I wanted. Sharing my daily progress photos...</p>
+                            <div class="post-images single">
+                                <img src="[images.unsplash.com](https://images.unsplash.com/photo-1588516903720-8ceb67f9ef84?w=600)" alt="Result">
+                            </div>
+                        </div>
+                        <div class="post-tags">
+                            <span class="tag">Lip Filler</span>
+                            <span class="tag">1 Week</span>
+                            <span class="tag">Experience Sharing</span>
+                        </div>
+                        <div class="post-actions">
+                            <button class="action-btn"><i class="far fa-heart"></i> 96</button>
+                            <button class="action-btn"><i class="far fa-comment"></i> 33</button>
+                            <button class="action-btn"><i class="fas fa-check-circle"></i> Helpful</button>
+                            <button class="action-btn"><i class="far fa-bookmark"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile Page -->
+            <div id="profilePage" class="page">
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <div class="profile-cover"></div>
+                        <div class="profile-info">
+                            <div class="profile-avatar-section">
+                                <img src="[i.pravatar.cc](https://i.pravatar.cc/150?img=47)" alt="Merve Y." class="profile-avatar">
+                                <div class="profile-badges">
+                                    <span class="badge trusted">Trusted</span>
+                                    <span class="glow-badge">? Glow 320</span>
+                                </div>
+                            </div>
+                            <div class="profile-details">
+                                <h1>Merve Y. ?</h1>
+                                <p class="profile-bio">Aesthetic enthusiast sharing real experiences to help & inspire the community.</p>
+                                <div class="profile-meta">
+                                    <span><i class="fas fa-map-marker-alt"></i> Ýstanbul, Türkiye</span>
+                                    <span><i class="fas fa-calendar"></i> Joined Jan 2024</span>
+                                </div>
+                            </div>
+                            <div class="profile-actions">
+                                <button class="btn-secondary"><i class="fas fa-edit"></i> Edit Profile</button>
+                                <button class="btn-icon"><i class="fas fa-share-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <span class="stat-value">128</span>
+                            <span class="stat-label">Posts</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">96</span>
+                            <span class="stat-label">Replies</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">326</span>
+                            <span class="stat-label">Helpful</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">4.2K</span>
+                            <span class="stat-label">Profile Views</span>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-tabs">
+                        <button class="tab active">Posts</button>
+                        <button class="tab">Replies</button>
+                        <button class="tab">Contributions</button>
+                        <button class="tab">Media</button>
+                        <button class="tab">Saved</button>
+                    </div>
+                    
+                    <div class="profile-content">
+                        <div class="profile-posts">
+                            <div class="profile-post-card">
+                                <div class="post-thumbnail">
+                                    <img src="[images.unsplash.com](https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=300)" alt="Post">
+                                    <div class="play-btn"><i class="fas fa-play"></i></div>
+                                </div>
+                                <div class="post-info">
+                                    <h4>Rhinoplasty experience: 6 month results ??</h4>
+                                    <div class="post-tags-small">
+                                        <span>Rhinoplasty</span>
+                                        <span>6 Month Results</span>
+                                    </div>
+                                    <div class="post-stats">
+                                        <span><i class="far fa-comment"></i> 128 comments</span>
+                                        <span><i class="fas fa-check-circle"></i> 46 found this helpful</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="profile-post-card">
+                                <div class="post-thumbnail">
+                                    <img src="[images.unsplash.com](https://images.unsplash.com/photo-1588516903720-8ceb67f9ef84?w=300)" alt="Post">
+                                    <div class="play-btn"><i class="fas fa-play"></i></div>
+                                </div>
+                                <div class="post-info">
+                                    <h4>Lip filler results: 1 week update ??</h4>
+                                    <div class="post-tags-small">
+                                        <span>Lip Filler</span>
+                                        <span>1 Week</span>
+                                    </div>
+                                    <div class="post-stats">
+                                        <span><i class="far fa-comment"></i> 76 comments</span>
+                                        <span><i class="fas fa-check-circle"></i> 33 found this helpful</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Categories Page -->
+            <div id="categoriesPage" class="page">
+                <header class="page-header">
+                    <h1>Categories</h1>
+                    <div class="header-actions">
+                        <div class="search-bar">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search categories...">
+                        </div>
+                    </div>
+                </header>
+                
+                <div class="categories-grid">
+                    <div class="category-card" onclick="openCategory('rhinoplasty')">
+                        <div class="category-image">
+                            <img src="[images.unsplash.com](https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=400)" alt="Rhinoplasty">
+                        </div>
+                        <div class="category-info">
+                            <h3>Rhinoplasty</h3>
+                            <p>Explore real experiences and recovery journeys.</p>
+                            <div class="category-stats">
+                                <span><strong>2.4K</strong> Posts</span>
+                                <span><strong>128</strong> Active Members</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-image">
+                            <img src="[images.unsplash.com](https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=400)" alt="Lip Filler">
+                        </div>
+                        <div class="category-info">
+                            <h3>Lip Filler</h3>
+                            <p>Natural enhancement experiences and tips.</p>
+                            <div class="category-stats">
+                                <span><strong>1.8K</strong> Posts</span>
+                                <span><strong>96</strong> Active Members</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-image">
+                            <img src="[images.unsplash.com](https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400)" alt="Skincare">
+                        </div>
+                        <div class="category-info">
+                            <h3>Skincare</h3>
+                            <p>Advanced treatments and daily routines.</p>
+                            <div class="category-stats">
+                                <span><strong>3.2K</strong> Posts</span>
+                                <span><strong>215</strong> Active Members</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-image">
+                            <img src="[images.unsplash.com](https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400)" alt="Hair">
+                        </div>
+                        <div class="category-info">
+                            <h3>Hair Transplant</h3>
+                            <p>Recovery timelines and results.</p>
+                            <div class="category-stats">
+                                <span><strong>1.5K</strong> Posts</span>
+                                <span><strong>89</strong> Active Members</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Category Detail Page -->
+            <div id="categoryDetailPage" class="page">
+                <div class="category-detail">
+                    <div class="category-hero">
+                        <img src="[images.unsplash.com](https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=1200)" alt="Rhinoplasty">
+                        <div class="category-hero-content">
+                            <h1>Rhinoplasty</h1>
+                            <p>Explore real experiences and recovery journeys.</p>
+                            <div class="category-detail-stats">
+                                <span><strong>2.4K</strong> Posts</span>
+                                <span><strong>128</strong> Active Members</span>
+                            </div>
+                            <button class="btn-primary">Follow</button>
+                        </div>
+                    </div>
+                    
+                    <div class="category-content">
+                        <div class="category-main">
+                            <div class="filter-tabs">
+                                <button class="filter-tab active">Most Discussed</button>
+                                <button class="filter-tab">Most Recent</button>
+                                <button class="filter-tab">Most Helpful</button>
+                                <button class="filter-tab">Recovery Timeline</button>
+                                <button class="filter-tab">Location</button>
+                                <button class="filter-tab"><i class="fas fa-filter"></i></button>
+                            </div>
+                            
+                            <div class="category-posts">
+                                <div class="category-post-card">
+                                    <div class="post-thumbnail">
+                                        <img src="[images.unsplash.com](https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=300)" alt="Post">
+                                    </div>
+                                    <div class="post-content">
+                                        <h4>My rhinoplasty 6 month journey</h4>
+                                        <p>I'm so happy with my results. Breathing better and more confident now.</p>
+                                        <div class="post-author">
+                                            <img src="[i.pravatar.cc](https://i.pravatar.cc/150?img=32)" alt="Ceren K.">
+                                            <span>Ceren K.</span>
+                                            <span class="badge trusted">Trusted</span>
+                                            <span class="glow">? Glow 320</span>
+                                        </div>
+                                        <div class="post-stats">
+                                            <span><i class="far fa-comment"></i> 128 comments</span>
+                                            <span><i class="fas fa-check-circle"></i> 46 helpful</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="category-post-card">
+                                    <div class="post-thumbnail">
+                                        <img src="[images.unsplash.com](https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=300)" alt="Post">
+                                    </div>
+                                    <div class="post-content">
+                                        <h4>Rhinoplasty 3 month update</h4>
+                                        <p>Swelling going down, results getting more natural every day.</p>
+                                        <div class="post-author">
+                                            <img src="[i.pravatar.cc](https://i.pravatar.cc/150?img=45)" alt="Burak Y.">
+                                            <span>Burak Y.</span>
+                                            <span class="badge active">Active</span>
+                                            <span class="glow">? Glow 280</span>
+                                        </div>
+                                        <div class="post-stats">
+                                            <span><i class="far fa-comment"></i> 96 comments</span>
+                                            <span><i class="fas fa-check-circle"></i> 32 helpful</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="category-post-card">
+                                    <div class="post-thumbnail">
+                                        <img src="[images.unsplash.com](https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=300)" alt="Post">
+                                    </div>
+                                    <div class="post-content">
+                                        <h4>Revision rhinoplasty experience</h4>
+                                        <p>My revision journey and what I learned from the process.</p>
+                                        <div class="post-author">
+                                            <img src="[i.pravatar.cc](https://i.pravatar.cc/150?img=23)" alt="Melisa A.">
+                                            <span>Melisa A.</span>
+                                            <span class="badge expert">Expert</span>
+                                            <span class="glow">? Glow 450</span>
+                                        </div>
+                                        <div class="post-stats">
+                                            <span><i class="far fa-comment"></i> 76 comments</span>
+                                            <span><i class="fas fa-check-circle"></i> 28 helpful</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <aside class="category-sidebar">
+                            <div class="sidebar-section">
+                                <h3><i class="fas fa-fire"></i> Most Discussed This Week</h3>
+                                <ol class="trending-list">
+                                    <li>
+                                        <img src="[i.pravatar.cc](https://i.pravatar.cc/150?img=32)" alt="">
+                                        <div>
+                                            <span class="title">6 month rhinoplasty results</span>
+                                            <span class="meta">128 comments</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <img src="[i.pravatar.cc](https://i.pravatar.cc/150?img=45)" alt="">
+                                        <div>
+                                            <span class="title">Revision rhinoplasty experience</span>
+                                            <span class="meta">86 comments</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <img src="[i.pravatar.cc](https://i.pravatar.cc/150?img=23)" alt="">
+                                        <div>
+                                            <span class="title">Rhinoplasty cost in different countries</span>
+                                            <span class="meta">74 comments</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <img src="[i.pravatar.cc](https://i.pravatar.cc/150?img=12)" alt="">
+                                        <div>
+                                            <span class="title">Open vs closed rhinoplasty</span>
+                                            <span class="meta">65 comments</span>
+                                        </div>
+                                    </li>
+                                </ol>
+                                <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                            
+                            <div class="sidebar-section">
+                                <h3><i class="fas fa-users"></i> Active Members</h3>
+                                <ol class="members-list">
+                                    <li>
+                                        <img src="[i.pravatar.cc](https://i.pravatar.cc/150?img=32)" alt="">
+                                        <span class="name">Ceren K.</span>
+                                        <span class="glow">? Glow 320</span>
+                                    </li>
+                                    <li>
+                                        <img src="[i.pravatar.cc](https://i.pravatar.cc/150?img=45)" alt="">
+                                        <span class="name">Burak Y.</span>
+                                        <span class="glow">? Glow 280</span>
+                                    </li>
+                                    <li>
+                                        <img src="[i.pravatar.cc](https://i.pravatar.cc/150?img=23)" alt="">
+                                        <span class="name">Melisa A.</span>
+                                        <span class="glow">? Glow 180</span>
+                                    </li>
+                                    <li>
+                                        <img src="[i.pravatar.cc](https://i.pravatar.cc/150?img=12)" alt="">
+                                        <span class="name">Ece S.</span>
+                                        <span class="glow">? Glow 150</span>
+                                    </li>
+                                    <li>
+                                        <img src="[i.pravatar.cc](https://i.pravatar.cc/150?img=8)" alt="">
+                                        <span class="name">Deniz T.</span>
+                                        <span class="glow">? Glow 140</span>
+                                    </li>
+                                </ol>
+                                <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Settings Page -->
+            <div id="settingsPage" class="page">
+                <div class="settings-container">
+                    <aside class="settings-sidebar">
+                        <div class="settings-user">
+                            <img src="[i.pravatar.cc](https://i.pravatar.cc/150?img=47)" alt="Merve Y.">
+                            <div>
+                                <span class="name">Merve Y.</span>
+                                <span class="badge trusted">Trusted</span>
+                            </div>
+                        </div>
+                        
+                        <nav class="settings-nav">
+                            <a href="#" class="settings-nav-item active">
+                                <i class="fas fa-user"></i> Profile Information
+                            </a>
+                            <a href="#" class="settings-nav-item">
+                                <i class="fas fa-globe"></i> Language
+                            </a>
+                            <a href="#" class="settings-nav-item">
+                                <i class="fas fa-lock"></i> Privacy
+                            </a>
+                            <a href="#" class="settings-nav-item">
+                                <i class="fas fa-bell"></i> Notifications
+                            </a>
+                            <a href="#" class="settings-nav-item">
+                                <i class="fas fa-shield-alt"></i> Security
+                            </a>
+                            <a href="#" class="settings-nav-item">
+                                <i class="fas fa-link"></i> Connected Accounts
+                            </a>
+                            <a href="#" class="settings-nav-item danger">
+                                <i class="fas fa-trash"></i> Delete Account
+                            </a>
+                        </nav>
+                    </aside>
+                    
+                    <div class="settings-content">
+                        <div class="settings-section">
+                            <h2>Profile Information</h2>
+                            <p class="section-subtitle">Manage your personal information and profile details.</p>
+                            
+                            <div class="settings-form">
+                                <div class="form-group photo-upload">
+                                    <label>Profile Photo</label>
+                                    <div class="photo-preview">
+                                        <img src="[i.pravatar.cc](https://i.pravatar.cc/150?img=47)" alt="Profile">
+                                        <button class="btn-secondary">Change Photo</button>
+                                    </div>
+                                    <span class="help-text">JPG, PNG. Max 5MB.</span>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Full Name</label>
+                                        <input type="text" value="Merve Yilmaz">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Username</label>
+                                        <input type="text" value="mervey">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Bio</label>
+                                    <textarea rows="3">Aesthetic lover • Sharing real experiences to help and inspire others ??</textarea>
+                                    <span class="char-count">78/200</span>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Location</label>
+                                        <input type="text" value="Ýstanbul, Türkiye">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Website</label>
+                                        <input type="url" value="[glowtalk.com](https://glowtalk.com/mervey)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-section">
+                            <h2>Language</h2>
+                            <p class="section-subtitle">Choose your preferred language.</p>
+                            
+                            <div class="form-group">
+                                <select class="language-select">
+                                    <option value="en">English</option>
+                                    <option value="tr" selected>Türkçe</option>
+                                    <option value="es">Español</option>
+                                    <option value="fr">Français</option>
+                                    <option value="de">Deutsch</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-section">
+                            <h2>Notifications</h2>
+                            <p class="section-subtitle">Manage how you receive notifications.</p>
+                            
+                            <div class="toggle-group">
+                                <div class="toggle-item">
+                                    <div>
+                                        <span class="toggle-label">Email Notifications</span>
+                                        <span class="toggle-desc">Receive notifications via email</span>
+                                    </div>
+                                    <label class="toggle">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="toggle-item">
+                                    <div>
+                                        <span class="toggle-label">Push Notifications</span>
+                                        <span class="toggle-desc">Receive push notifications on your device</span>
+                                    </div>
+                                    <label class="toggle">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-section">
+                            <h2>Security</h2>
+                            <p class="section-subtitle">Update your password and security settings.</p>
+                            
+                            <button class="btn-secondary">Change Password</button>
+                        </div>
+                        
+                        <div class="settings-actions">
+                            <button class="btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <div class="footer-item">
+                <i class="fas fa-shield-alt"></i>
+                <div>
+                    <strong>Trusted Community</strong>
+                    <span>We moderate 24/7</span>
+                </div>
+            </div>
+            <div class="footer-item">
+                <i class="fas fa-heart"></i>
+                <div>
+                    <strong>Real Experiences</strong>
+                    <span>Shared by real people</span>
+                </div>
+            </div>
+            <div class="footer-item">
+                <i class="fas fa-lock"></i>
+                <div>
+                    <strong>Personal Data Protected</strong>
+                    <span>Your privacy is our priority</span>
+                </div>
+            </div>
+            <div class="footer-item">
+                <i class="fas fa-users"></i>
+                <div>
+                    <strong>Contribute & Inspire</strong>
+                    <span>Help others on their journey</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
